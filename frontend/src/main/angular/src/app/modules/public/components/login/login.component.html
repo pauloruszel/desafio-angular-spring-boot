@@ -1,0 +1,55 @@
+<form [formGroup]="form" autocomplete="off" novalidate
+      (ngSubmit)="create(form.value)">
+  <div class="form-container"
+       fxLayout="column"
+       fxLayoutAlign="space-evenly center">
+
+    <div fxFlex="10"
+         fxLayout="row"
+         fxLayoutAlign="center center" class="container-title-form">
+      <p class="card-title">Acesse sua Conta</p>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="icon-header">
+      <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        class="profile-img-card"/>
+    </div>
+
+
+    <mat-divider></mat-divider>
+    <div fxFlex="80" class="form-container"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Usuário</mat-label>
+        <label>
+          <input matInput formControlName="nomeUsuario" type="text" placeholder="Usuário">
+        </label>
+        <mat-hint>Campo obrigatório.</mat-hint>
+        <mat-error *ngIf="hasErros('nomeUsuario', 'required')">Campo obrigatório.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <label>
+          <input matInput formControlName="senha" type="password" placeholder="Senha">
+        </label>
+        <mat-hint>Campo obrigatório.</mat-hint>
+        <mat-error *ngIf="hasErros('senha', 'required')">Campo obrigatório.</mat-error>
+        <mat-error *ngIf="hasErros('senha', 'minlength')">O campo deve possuir ao menos 6 caracteres.</mat-error>
+      </mat-form-field>
+
+    </div>
+    <div fxFlex="10" fxLayout="row" fxLayoutAlign="center center" class="div-esquecer-senha">
+      <a [routerLink]="" (click)="goToRegister()">Não tem Registro?</a>
+    </div>
+    <div fxFlex="10"
+         fxLayout="row"
+         fxLayoutAlign="center center" fxLayoutGap="30px">
+      <div fxLayoutAlign="space-evenly center">
+        <button mat-raised-button color="primary" class="br-button-entrar" [disabled]="!form.valid">Logar</button>
+      </div>
+    </div>
+  </div>
+</form>

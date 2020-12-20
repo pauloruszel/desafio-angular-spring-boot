@@ -1,0 +1,67 @@
+<form [formGroup]="form" autocomplete="off" novalidate
+      (ngSubmit)="create(form.value)">
+  <div class="form-container"
+       fxLayout="column"
+       fxLayoutAlign="space-evenly center">
+
+    <div fxFlex="10"
+         fxLayout="row"
+         fxLayoutAlign="center center" class="container-title-form">
+      <p class="card-title">Cadastro de Usuário</p>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px" class="icon-header">
+      <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+           class="profile-img-card"/>
+    </div>
+
+
+    <mat-divider></mat-divider>
+    <div fxFlex="80" class="form-container"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Usuário</mat-label>
+        <label>
+          <input matInput formControlName="nomeUsuario" type="text" placeholder="Usuário">
+        </label>
+        <mat-hint>Campo obrigatório.</mat-hint>
+        <mat-error *ngIf="hasErros('nomeUsuario', 'required')">Campo obrigatório.</mat-error>
+        <mat-error *ngIf="hasErros('nomeUsuario', 'minlength')">O campo deve possuir ao menos 3 caracteres.</mat-error>
+        <mat-error *ngIf="hasErros('nomeUsuario', 'maxlength')">O nome não pode ultrapassar 20 caracteres.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <label>
+          <input matInput formControlName="email" type="email" placeholder="Email">
+        </label>
+        <mat-hint>Campo obrigatório.</mat-hint>
+        <mat-error *ngIf="hasErros('email', 'required')">Campo obrigatório.</mat-error>
+        <mat-error *ngIf="hasErros('email', 'email')">O formato do campo email é inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <label>
+          <input matInput formControlName="senha" type="password" placeholder="Senha">
+        </label>
+        <mat-hint>Campo obrigatório.</mat-hint>
+        <mat-error *ngIf="hasErros('senha', 'required')">Campo obrigatório.</mat-error>
+        <mat-error *ngIf="hasErros('senha', 'minlength')">O campo deve possuir ao menos 6 caracteres.</mat-error>
+      </mat-form-field>
+
+    </div>
+    <div fxFlex="10"
+         fxLayout="row"
+         fxLayoutAlign="center center" fxLayoutGap="30px">
+      <div fxLayoutAlign="space-evenly center">
+        <button mat-raised-button color="primary" class="br-button-entrar" (click)="goToLogin()">Voltar</button>
+      </div>
+      <div fxLayoutAlign="space-evenly center">
+        <button mat-raised-button color="primary" class="br-button-entrar" [disabled]="!form.valid">Cadastrar</button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+<div class="form-container"
+     fxLayout="column"
+     fxLayoutAlign="space-evenly center" *ngIf="currentUser; else loggedOut">
+
+  <header class="jumbotron">
+    <h3>
+      Perfil: <strong>{{ currentUser.username }}</strong>
+    </h3>
+  </header>
+  <p>
+    <strong>Token:</strong>
+    {{ token1 }} ...
+    {{ token2 }}
+  </p>
+  <p>
+    <strong>Email:</strong>
+    {{ currentUser.email }}
+  </p>
+  <strong>Roles:</strong>
+  <ul>
+    <li *ngFor="let role of currentUser.roles">
+      {{ role }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #loggedOut>
+  <div class="form-container"
+       fxLayout="column"
+       fxLayoutAlign="space-evenly center">
+    <h2>Por favor faça o Login.</h2>
+  </div>
+</ng-template>
