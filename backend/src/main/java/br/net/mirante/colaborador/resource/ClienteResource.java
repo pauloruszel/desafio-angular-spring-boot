@@ -2,10 +2,12 @@ package br.net.mirante.colaborador.resource;
 
 import br.net.mirante.colaborador.domain.dtos.ClienteDTO;
 import br.net.mirante.colaborador.domain.dtos.MensagemRetornoDTO;
+import br.net.mirante.colaborador.domain.model.Cliente;
 import br.net.mirante.colaborador.domain.util.MensagemUtil;
 import br.net.mirante.colaborador.exception.ParametroInvalidoException;
 import br.net.mirante.colaborador.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +40,23 @@ public class ClienteResource {
     @GetMapping("/{id:[1-9][0-9]*}")
     public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable("id") final Long id) throws ParametroInvalidoException {
         final var retorno = clienteService.buscarPorId(id);
-        if(Objects.nonNull(retorno)) {
+        if (Objects.nonNull(retorno)) {
             return status(OK).body(retorno);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/search")
+    public Page<Cliente> search(
+            @RequestParam("searchTerm") String searchTerm,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        return clienteService.listar(searchTerm, page, size);
+    }
+
+    @GetMapping("/all")
+    public Page<Cliente> getAll() {
+        return clienteService.findAll();
     }
 
 
@@ -71,7 +86,6 @@ public class ClienteResource {
         return status(NOT_FOUND).body(mensagemRetornoDTO);
 
     }
-
 
 
 }

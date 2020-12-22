@@ -1,9 +1,9 @@
 {
   "name": "angular",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.json --host 0.0.0.0 --disable-host-check",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -29,7 +29,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1000.3",
+    "@angular-devkit/build-angular": "^0.1100.5",
     "@angular/cli": "~10.0.3",
     "@angular/compiler-cli": "^10.0.4",
     "@angular/language-service": "^10.0.4",

@@ -5,10 +5,11 @@
     </button>
     <div>
       <a mat-button [routerLink]="'/home'"> Home </a>
-      <a mat-button *ngIf="showAdminBoard" [routerLink]="'/admin'"> Admin Board </a>
-      <a mat-button *ngIf="showModeratorBoard" [routerLink]="'/mod'"> Moderator Board </a>
-      <a mat-button *ngIf="isLoggedIn" [routerLink]="'/user'"> Usuário </a>
+      <a mat-button *ngIf="false" [routerLink]="'/admin'"> Admin Board </a>
+      <a mat-button *ngIf="false" [routerLink]="'/mod'"> Moderator Board </a>
+      <a mat-button *ngIf="false" [routerLink]="'/user'"> Usuário </a>
       <a mat-button *ngIf="isLoggedIn" [routerLink]="'/profile'"> Perfil </a>
+      <a mat-button *ngIf="isLoggedIn" [routerLink]="'cadastrar'"> Cadastrar Cliente </a>
     </div>
     <span class="menu-spacer"></span>
     <a mat-button *ngIf="!isLoggedIn" [routerLink]="'/register'"> Registrar </a>

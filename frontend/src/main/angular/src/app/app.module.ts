@@ -29,12 +29,15 @@ import {RouterModule} from '@angular/router';
 import {SharedModelsModule} from './shared/shared-models/shared-models.module';
 import {AppRoutingModule} from './app-routing.module';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {BehaviorSubject} from 'rxjs';
-import {UsuarioDto} from './shared/shared-models/dto/usuario-dto';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {CadastrarComponent} from './modules/private/components/cliente/cadastrar/cadastrar.component';
+import {EditarComponent} from './modules/private/components/cliente/editar/editar.component';
+import {PesquisarComponent} from './modules/private/components/cliente/pesquisar/pesquisar.component';
+import {VisualizarComponent} from './modules/private/components/cliente/visualizar/visualizar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    RegisterComponent
+    RegisterComponent,
+    CadastrarComponent,
+    EditarComponent,
+    PesquisarComponent,
+    VisualizarComponent
   ],
   imports: [
     AppRoutingModule,
@@ -72,11 +79,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     RouterModule,
     MatSnackBarModule,
     SharedModelsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ],
-  providers: [authInterceptorProviders,
-    { provide: 'InformacaoSistema', useValue: new BehaviorSubject(new UsuarioDto()) },
-  ],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {

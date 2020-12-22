@@ -26,10 +26,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.iniciarFormulario();
-
-    if (this.tokenStorageService.getToken()) {
-      this.roles = this.tokenStorageService.getUser().roles;
-    }
   }
 
   iniciarFormulario() {
@@ -57,8 +53,8 @@ export class LoginComponent implements OnInit {
       this.tokenStorageService.saveToken(data.token);
       this.tokenStorageService.saveUsuario(data);
       this.roles = data.roles;
-      this.reloadPage();
       this.mensageriaService.showMensagemSucesso('Logado como: ' + this.roles);
+      this.reloadPage();
     }, (err) => {
       this.mensageriaService.showMensagemErro(err.error.mensagem);
     });
@@ -68,9 +64,8 @@ export class LoginComponent implements OnInit {
     window.location.reload();
   }
 
-  goToRegister(){
-    this.router.navigate([`/register`]);
+  goToRegister() {
+    this.router.navigate([`register`]);
   }
-
 
 }

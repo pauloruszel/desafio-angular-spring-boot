@@ -7,6 +7,8 @@ import {ProfileComponent} from './modules/private/components/profile/profile.com
 import {BoardUserComponent} from './modules/private/components/board-user/board-user.component';
 import {BoardAdminComponent} from './modules/private/components/board-admin/board-admin.component';
 import {BoardModeratorComponent} from './modules/private/components/board-moderator/board-moderator.component';
+import {CadastrarComponent} from "./modules/private/components/cliente/cadastrar/cadastrar.component";
+import {AuthGuard} from "./modules/core/guard/auth.guard";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -16,6 +18,7 @@ const routes: Routes = [
   {path: 'user', component: BoardUserComponent},
   {path: 'mod', component: BoardModeratorComponent},
   {path: 'admin', component: BoardAdminComponent},
+  {path: 'cadastrar', component: CadastrarComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

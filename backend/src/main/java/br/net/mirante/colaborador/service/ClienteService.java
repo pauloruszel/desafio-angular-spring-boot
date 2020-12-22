@@ -11,6 +11,10 @@ import br.net.mirante.colaborador.repository.ClienteRepository;
 import br.net.mirante.colaborador.repository.EmailRepository;
 import br.net.mirante.colaborador.repository.TelefoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -118,6 +122,20 @@ public class ClienteService extends BaseService {
 
         clienteRepository.deleteById(id);
         return new MensagemRetornoDTO(MensagemUtil.MSG_REGISTRO_EXCLUIDO);
+    }
+
+    @Transactional(Transactional.TxType.NOT_SUPPORTED)
+    public Page<Cliente> listar(String searchTerm, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+        return clienteRepository.listar(searchTerm.toLowerCase(), pageRequest);
+    }
+
+    @Transactional(Transactional.TxType.NOT_SUPPORTED)
+    public Page<Cliente> findAll() {
+        int page = 0;
+        int size = 10;
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "nome");
+        return new PageImpl<>(clienteRepository.findAll(), pageRequest, size);
     }
 
 }
