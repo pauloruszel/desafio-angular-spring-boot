@@ -18,18 +18,18 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  logar(credencial: CredencialDto): Observable<any> {
+  logar(credencialDto: CredencialDto): Observable<any> {
     return this.http.post(AUTH_API + 'login', {
-      nomeUsuario: credencial.nomeUsuario,
-      senha: credencial.senha
+      usuario: credencialDto.usuario,
+      senha: credencialDto.senha
     }, httpOptions);
   }
 
-  registrar(usuario: UsuarioDto): Observable<any> {
+  registrar(usuarioDto: UsuarioDto): Observable<any> {
     return this.http.post(AUTH_API + 'register', {
-      nomeUsuario: usuario.nomeUsuario,
-      email: usuario.email,
-      senha: usuario.senha
+      usuario: usuarioDto.usuario,
+      email: usuarioDto.email,
+      senha: usuarioDto.senha
     }, httpOptions);
   }
 }

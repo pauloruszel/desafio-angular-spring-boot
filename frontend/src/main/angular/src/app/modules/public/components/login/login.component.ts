@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   montarCredencial(): CredencialDto {
     return {
-      nomeUsuario: this.form.get('nomeUsuario').value,
+      usuario: this.form.get('nomeUsuario').value,
       senha: this.form.get('senha').value,
     };
   }

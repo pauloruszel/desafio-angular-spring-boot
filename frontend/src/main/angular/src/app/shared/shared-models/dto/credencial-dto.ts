@@ -1,4 +1,4 @@
 export interface CredencialDto {
-  nomeUsuario?: string;
+  usuario?: string;
   senha?: string;
 }

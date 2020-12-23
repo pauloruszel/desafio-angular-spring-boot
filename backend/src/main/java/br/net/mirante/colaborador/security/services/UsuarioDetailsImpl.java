@@ -19,7 +19,7 @@ public class UsuarioDetailsImpl implements UserDetails {
 
     private Long id;
 
-    private String nomeUsuario;
+    private String usuario;
 
     private String email;
 
@@ -28,10 +28,10 @@ public class UsuarioDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioDetailsImpl(Long id, String nomeUsuario, String email, String senha,
+    public UsuarioDetailsImpl(Long id, String usuario, String email, String senha,
                               Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.nomeUsuario = nomeUsuario;
+        this.usuario = usuario;
         this.email = email;
         this.senha = senha;
         this.authorities = authorities;
@@ -44,7 +44,7 @@ public class UsuarioDetailsImpl implements UserDetails {
 
         return new UsuarioDetailsImpl(
                 usuario.getId(),
-                usuario.getNomeUsuario(),
+                usuario.getUsuario(),
                 usuario.getEmail(),
                 usuario.getSenha(),
                 authorities);
@@ -62,7 +62,7 @@ public class UsuarioDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nomeUsuario;
+        return usuario;
     }
 
     @Override

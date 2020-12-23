@@ -18,14 +18,14 @@ import java.util.Set;
 @AttributeOverride(name = "id", column = @Column(name = "idUsuario", unique = true, nullable = false))
 @Table(	name = "usuarios",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "nomeUsuario"),
+                @UniqueConstraint(columnNames = "usuario"),
                 @UniqueConstraint(columnNames = "email")
         })
 public class Usuario extends BaseEntity {
 
     @NotBlank
     @Size(max = 20)
-    private String nomeUsuario;
+    private String usuario;
 
     @NotBlank
     @Size(max = 50)
@@ -42,8 +42,8 @@ public class Usuario extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Usuario(String nomeUsuario, String email, String senha) {
-        this.nomeUsuario = nomeUsuario;
+    public Usuario(String usuario, String email, String senha) {
+        this.usuario = usuario;
         this.email = email;
         this.senha = senha;
     }

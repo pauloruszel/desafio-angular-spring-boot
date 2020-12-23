@@ -14,7 +14,7 @@ public class SignupRequestDTO {
 
     @NotBlank
     @Size(min = 3, max = 20)
-    private String nomeUsuario;
+    private String usuario;
 
     @NotBlank
     @Size(max = 50)

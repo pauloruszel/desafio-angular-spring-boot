@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
 
   montarUsuario(): UsuarioDto {
     return {
-      nomeUsuario: this.form.get('nomeUsuario').value,
+      usuario: this.form.get('nomeUsuario').value,
       email: this.form.get('email').value,
       senha: this.form.get('senha').value
     };

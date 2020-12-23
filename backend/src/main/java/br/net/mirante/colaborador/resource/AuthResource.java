@@ -55,7 +55,7 @@ public class AuthResource {
     public ResponseEntity<JwtResponseDTO> autenticarUsuario(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getNomeUsuario(), loginRequestDTO.getSenha()));
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsuario(), loginRequestDTO.getSenha()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.gerarJwtToken(authentication);
@@ -74,7 +74,7 @@ public class AuthResource {
 
     @PostMapping("/register")
     public ResponseEntity<?> registrarUsuario(@Valid @RequestBody SignupRequestDTO signupRequestDTO) {
-        if (usuarioRepository.existsByNomeUsuario(signupRequestDTO.getNomeUsuario())) {
+        if (usuarioRepository.existsByUsuario(signupRequestDTO.getUsuario())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MensagemRetornoDTO(MensagemUtil.MSG_NOME_USUARIO_EM_USO));
@@ -87,7 +87,7 @@ public class AuthResource {
         }
 
         // Criar um novo usuário
-        Usuario usuario = new Usuario(signupRequestDTO.getNomeUsuario(),
+        Usuario usuario = new Usuario(signupRequestDTO.getUsuario(),
                 signupRequestDTO.getEmail(),
                 encoder.encode(signupRequestDTO.getSenha()));
 
