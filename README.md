@@ -43,7 +43,7 @@ $ cd backend
 Executar o comando do maven para gerar o artefato que será publicado no docker
 
 ```shell script
-$ cd mvn clean package -DskipTests
+$ mvn clean package -DskipTests
 ```
 
 ### Passo 5
