@@ -107,9 +107,9 @@ INSERT INTO public.tb_tipo_telefone (ds_tipo_telefone) VALUES('RESIDENCIAL');
 INSERT INTO public.tb_tipo_telefone (ds_tipo_telefone) VALUES('COMERCIAL');
 INSERT INTO public.tb_tipo_telefone (ds_tipo_telefone) VALUES('CELULAR');
 
-INSERT INTO public.tb_telefone (nr_telefone, id_tipo_telefone) VALUES('61982909420', 3);
+INSERT INTO public.tb_telefone (nr_telefone, id_tipo_telefone) VALUES('61989965059', 3);
 INSERT INTO public.tb_endereco (ds_bairro, ds_cep, ds_cidade, ds_complemento, ds_logradouro, sg_uf) VALUES('Sé', '01001000', 'São Paulo', 'lado ímpar', 'Praça da Sé', 'SP');
-INSERT INTO public.tb_cliente (ds_cpf, nm_cliente, id_endereco) VALUES(23020727820, 'Paulo Ruszel', 1);
-INSERT INTO public.tb_email (ds_email) VALUES('paulo.santos@gmail');
+INSERT INTO public.tb_cliente (ds_cpf, nm_cliente, id_endereco) VALUES(83803955149, 'Calebe Tomás Theo Vieira', 1);
+INSERT INTO public.tb_email (ds_email) VALUES('calebetomastheovieira..calebetomastheovieira@mectron.com.br');
 INSERT INTO public.tb_cliente_email (id_cliente, id_email) VALUES(1, 1);
 INSERT INTO public.tb_cliente_telefone (id_cliente, id_telefone) VALUES(1, 1);
