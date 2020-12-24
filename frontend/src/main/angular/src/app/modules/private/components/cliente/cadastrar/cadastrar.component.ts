@@ -130,6 +130,8 @@ export class CadastrarComponent implements OnInit {
                 Object.keys(this.form.controls).forEach(key => {
                     this.form.get(key).setErrors(null);
                 });
+
+                this.goToPesquisar();
             });
         }
     }
@@ -158,7 +160,7 @@ export class CadastrarComponent implements OnInit {
         return this.form.controls[controlName].hasError(errorName);
     }
 
-    voltar(): void {
+    goToPesquisar(): void {
         this.router.navigate([`cliente/pesquisar`]);
     }
 

@@ -8,22 +8,9 @@ import {ClienteService} from "../../../../../shared/shared-services/cliente.serv
 import {ClienteDto} from "../../../../../shared/shared-models/dto/cliente-dto";
 import {validarNome} from "../../../../../shared/shared-utils/string-utils";
 import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
+import {PageDto} from "../../../../../shared/shared-models/dto/page-dto";
 
 const SO_NUMEROS = /^\d{1,4}$/;
-
-class PaginacaoDTO {
-    currentPage: number;
-    pageSize?: number;
-    sortItem?: any;
-    totalResults?: number;
-    filtros?: any;
-    itens?: Array<any>;
-}
-
-class ClientePaginacaoDTO extends PaginacaoDTO {
-    nome: string;
-    cpf: string;
-}
 
 @Component({
     selector: 'app-pesquisar',
@@ -34,6 +21,7 @@ export class PesquisarComponent implements OnInit {
 
     public colunasCliente = ['codigo', 'nome', 'cpf', 'acoes'];
     public clienteDataSource: ClienteDto[] = [];
+    private paginacao: PageDto;
 
     @Output() SubmitEvent = new EventEmitter<object>();
     @ViewChild(MatPaginator) clientePaginator: MatPaginator;
@@ -41,7 +29,6 @@ export class PesquisarComponent implements OnInit {
     flagTable = true;
 
     form: FormGroup;
-    clientePaginacaoDTO: ClientePaginacaoDTO;
 
     // Controle da Tabela
     totalResultados = 0;
@@ -56,7 +43,11 @@ export class PesquisarComponent implements OnInit {
 
     ngOnInit() {
         this.iniciarFormulario();
-        this.pesquisarClientes();
+        this.getClientesPage();
+    }
+
+    reloadPage(): void {
+        window.location.reload();
     }
 
     iniciarFormulario() {
@@ -66,20 +57,28 @@ export class PesquisarComponent implements OnInit {
         });
     }
 
-
-    montarClientePaginacaoDTO(): any {
-        return {
-            nomeCliente: validarNome(this.form.get('nome').value),
-            cpfCliente: validarNome(this.form.get('cpf').value),
-            currentPage: 0,
-            // pageSize: this.clientePaginator.pageSize !== undefined ? this.clientePaginator.pageSize : 10,
-            pageSize: 10,
-            sortItem: null,
-            totalResults: null,
-            filtros: null,
-            itens: null,
-        };
+    getClientesPage() {
+        this.clienteService.getClientesPage().subscribe(res => {
+            this.paginacao = res;
+            this.totalResultados = res.content.length;
+            this.clienteDataSource = res.content;
+        })
     }
+
+    getClientePageByName() {
+        const nomeCliente = validarNome(this.form.get('nome').value);
+        this.clienteService.getClientesSearchTerm(nomeCliente).subscribe(res => {
+            this.paginacao = res;
+            this.totalResultados = res.content.length;
+            this.clienteDataSource = res.content;
+            if (this.totalResultados) {
+                this.flagTable = true;
+            } else {
+                this.flagTable = false;
+            }
+        })
+    }
+
 
     pesquisaPorEnter(event) {
         if (event.keyCode === 13) {
@@ -88,22 +87,21 @@ export class PesquisarComponent implements OnInit {
     }
 
     pesquisarClientes() {
-        this.clientePaginacaoDTO = this.montarClientePaginacaoDTO();
         this.getClientes();
     }
 
     configuraPaginaCliente($event?: PageEvent) {
-        this.clientePaginacaoDTO = {
-            nome: this.clientePaginacaoDTO.nome,
-            cpf: this.clientePaginacaoDTO.cpf,
-            currentPage: $event.pageIndex,
-            pageSize: $event.pageSize,
-            sortItem: null,
-            totalResults: null,
-            filtros: null,
-            itens: null,
-        };
-        this.getClientes();
+        const nomeCliente = validarNome(this.form.get('nome').value);
+        this.clienteService.getClientesPerPageAndSize(nomeCliente, $event.pageIndex, $event.pageSize).subscribe(res => {
+            this.paginacao = res;
+            this.totalResultados = res.content.length;
+            this.clienteDataSource = res.content;
+            if (this.totalResultados) {
+                this.flagTable = true;
+            } else {
+                this.flagTable = false;
+            }
+        })
     }
 
     get validarFormulario() {
@@ -125,7 +123,8 @@ export class PesquisarComponent implements OnInit {
 
     async getClientes() {
         this.clienteService.getClientes().subscribe(data => {
-            if (data) {
+            this.totalResultados = data.length;
+            if (this.totalResultados) {
                 this.clienteDataSource = data;
                 this.flagTable = true;
             } else {
@@ -139,6 +138,7 @@ export class PesquisarComponent implements OnInit {
                 this.form.get(key).setErrors(null);
             });
         });
+        this.getClientesPage();
     }
 
     async deleteCliente(id: number) {
@@ -167,11 +167,11 @@ export class PesquisarComponent implements OnInit {
     }
 
     editarCliente(id: number) {
-        this.router.navigate([`/editar/${id}`]);
+        this.router.navigate([`cliente/editar/${id}`]);
     }
 
     visualizarCliente(id: number) {
-        this.router.navigate([`/visualizar/${id}`]);
+        this.router.navigate([`cliente/visualizar/${id}`]);
     }
 
     limparCampos(): void {

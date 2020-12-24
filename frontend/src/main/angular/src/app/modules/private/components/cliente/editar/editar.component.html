@@ -1,1 +1,124 @@
-<p>editar works!</p>
+<form [formGroup]="form" autocomplete="off" novalidate
+      (ngSubmit)="create(form.value)">
+    <mat-card>
+        <div class="form-container"
+             fxLayout="column"
+             fxLayoutAlign="space-evenly center">
+            <div fxFlex="10"
+                 fxLayout="row"
+                 fxLayoutAlign="flex start center" class="container-title-form">
+                <p class="title-form">Editar Cliente</p>
+            </div>
+            <div fxFlex="80" class="form-container"
+                 fxLayout="column"
+                 fxLayoutAlign="space-evenly center">
+                <div fxLayout="row" class="form-container"
+                     fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="nome">Nome</mat-label>
+                        <input matInput formControlName="nome" type="text" placeholder="Nome Completo">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="hasErros('nome', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="cpf">CPF</mat-label>
+                        <input matInput formControlName="cpf" placeholder="999.999.999-99">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="hasErros('cpf', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" class="form-container"
+                     fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="cep">CEP</mat-label>
+                        <input matInput formControlName="cep" placeholder="CEP" (blur)="getConsultaCEP()">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="hasErros('cep', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="logradouro">Logradouro</mat-label>
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <input matInput formControlName="logradouro" type="text" placeholder="Logradouro">
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" class="form-container"
+                     fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="bairro">Bairro</mat-label>
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <input matInput formControlName="bairro" type="text" placeholder="Bairro">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="cidade">Cidade</mat-label>
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <input matInput formControlName="cidade" type="text" placeholder="Cidade">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="uf">UF</mat-label>
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <input matInput formControlName="uf" type="text" placeholder="Sigla UF">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="complemento">Complemento</mat-label>
+                        <input matInput formControlName="complemento" type="text" placeholder="Complemento">
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" class="form-container"
+                     fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo do Contato</mat-label>
+                        <mat-select formControlName="tipoContato" required>
+                            <mat-option *ngFor="let tipoContato of tiposDeContatos" [value]="tipoContato.id">
+                                {{ tipoContato.descricaoTipoTelefone }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Campo obrigatório.</mat-hint>
+                        <mat-error *ngIf="hasErros('tipoContato', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Telefone</mat-label>
+                        <input matInput formControlName="telefone" placeholder="Telefone" type="text">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="hasErros('telefone', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label for="email">E-mail</mat-label>
+                        <input type="email" formControlName="email" matInput placeholder="E-mail">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="hasErros('email', 'required')">Campo obrigatório.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="10"
+                     fxLayout="row"
+                     fxLayoutAlign="end center" fxLayoutGap="30px">
+                    <div fxLayoutAlign="space-evenly center">
+                        <button mat-raised-button (click)="goToPesquisar()">
+                            <em class="material-icons icon-card">keyboard_arrow_left</em>Voltar
+                        </button>
+                    </div>
+                    <div fxLayoutAlign="space-evenly center">
+                        <button mat-raised-button color="primary" [disabled]="!form.valid">
+                            <em class="material-icons icon-card">save</em>Salvar
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </mat-card>
+</form>

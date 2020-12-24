@@ -54,14 +54,10 @@ export class LoginComponent implements OnInit {
       this.tokenStorageService.saveUsuario(data);
       this.roles = data.roles;
       this.mensageriaService.showMensagemSucesso('Logado como: ' + this.roles);
-      this.reloadPage();
+      this.router.navigate([`cliente/pesquisar`]);
     }, (err) => {
       this.mensageriaService.showMensagemErro(err.mensagem);
     });
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 
   goToRegister() {

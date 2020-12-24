@@ -10,6 +10,8 @@ import {BoardModeratorComponent} from './modules/private/components/board-modera
 import {CadastrarComponent} from "./modules/private/components/cliente/cadastrar/cadastrar.component";
 import {AuthGuard} from "./modules/core/guard/auth.guard";
 import {PesquisarComponent} from "./modules/private/components/cliente/pesquisar/pesquisar.component";
+import {EditarComponent} from "./modules/private/components/cliente/editar/editar.component";
+import {VisualizarComponent} from "./modules/private/components/cliente/visualizar/visualizar.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path: 'admin', component: BoardAdminComponent},
   {path: 'cliente/cadastrar', component: CadastrarComponent, canActivate: [AuthGuard]},
   {path: 'cliente/pesquisar', component: PesquisarComponent, canActivate: [AuthGuard]},
+  {path: 'cliente/editar/:id', component: EditarComponent, canActivate: [AuthGuard]},
+  {path: 'cliente/visualizar/:id', component: VisualizarComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

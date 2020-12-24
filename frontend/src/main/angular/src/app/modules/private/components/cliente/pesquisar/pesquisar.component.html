@@ -2,11 +2,8 @@
      fxLayout="column"
      fxLayoutAlign="space-evenly center">
     <mat-card class="card-space">
-        <div fxLayoutAlign="end center" fxLayoutGap="80%">
+        <div>
             <mat-card-title>Pesquisar Cliente</mat-card-title>
-            <button mat-raised-button color="primary" (click)="cadastrar()">
-                <i class="material-icons icon-card">add</i>Novo
-            </button>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-evenly center">
             <div fxFlex="20">
@@ -33,12 +30,12 @@
              fxLayoutGap="10px">
             <div fxLayoutAlign="space-evenly center">
                 <button mat-raised-button color="default" (click)="limparCampos()">
-                    <i class="material-icons icon-card">clear</i>Limpar
+                    <em class="material-icons icon-card">clear</em>Limpar
                 </button>
             </div>
             <div fxLayoutAlign="space-evenly center">
-                <button mat-raised-button color="primary" (click)="pesquisarClientes()" [disabled]="validarFormulario">
-                    <i class="material-icons icon-card">search</i>Pesquisar
+                <button mat-raised-button color="primary" (click)="getClientePageByName()" [disabled]="validarFormulario">
+                    <em class="material-icons icon-card">search</em>Pesquisar
                 </button>
             </div>
         </div>
@@ -49,7 +46,16 @@
         </div>
     </mat-card>
     <mat-card [hidden]="clienteDataSource.length === 0">
-        <mat-card-title>Lista de Clientes</mat-card-title>
+        <div fxLayout="row">
+            <div fxLayoutAlign="flex-start" fxFlex="50">
+                <mat-card-title>Lista de Clientes</mat-card-title>
+            </div>
+            <div fxLayoutAlign="end" fxFlex="50">
+                <button mat-raised-button color="primary" (click)="cadastrar()">
+                    <em class="material-icons icon-card">add</em>Novo
+                </button>
+            </div>
+        </div>
         <div class="mat-elevation-z5">
             <table mat-table [dataSource]="clienteDataSource" matSort="false">
 
@@ -73,14 +79,14 @@
                     <mat-cell *matCellDef="let element" fxLayoutAlign="space-evenly center">
                         <button matTooltip="Visualizar Cliente" mat-flat-button color="visualizar"
                                 (click)="visualizarCliente(element.id)">
-                            <i class="material-icons icon-card">remove_red_eye</i>
+                            <em class="material-icons icon-card">remove_red_eye</em>
                         </button>
                         <button mat-flat-button color="editar" matTooltip="Editar Cliente"
                                 (click)="editarCliente(element.id)">
-                            <i class="material-icons icon-card">edit</i>
+                            <em class="material-icons icon-card">edit</em>
                         </button>
                         <button mat-flat-button color="warn" (click)="confirmarExclusao(element.id)">
-                            <i class="material-icons icon-card">delete</i>
+                            <em class="material-icons icon-card">delete</em>
                         </button>
                     </mat-cell>
                 </ng-container>
@@ -92,7 +98,7 @@
             <mat-paginator
                 #paginator
                 [pageIndex]=0
-                [pageSizeOptions]="[10, 20, 30, 40, 50, 100]"
+                [pageSizeOptions]="[5, 10, 20, 30, 40, 50]"
                 [length]="totalResultados"
                 (page)="configuraPaginaCliente($event)"
                 [hidden]="!flagTable">

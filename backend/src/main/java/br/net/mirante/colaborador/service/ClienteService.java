@@ -8,8 +8,6 @@ import br.net.mirante.colaborador.domain.model.Telefone;
 import br.net.mirante.colaborador.domain.util.MensagemUtil;
 import br.net.mirante.colaborador.exception.ParametroInvalidoException;
 import br.net.mirante.colaborador.repository.ClienteRepository;
-import br.net.mirante.colaborador.repository.EmailRepository;
-import br.net.mirante.colaborador.repository.TelefoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,16 +23,10 @@ import java.util.stream.Collectors;
 public class ClienteService extends BaseService {
 
     private final ClienteRepository clienteRepository;
-    private final TelefoneRepository telefoneRepository;
-    private final EmailRepository emailRepository;
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository,
-                          TelefoneRepository telefoneRepository,
-                          EmailRepository emailRepository) {
+    public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        this.telefoneRepository = telefoneRepository;
-        this.emailRepository = emailRepository;
     }
 
     @Transactional
