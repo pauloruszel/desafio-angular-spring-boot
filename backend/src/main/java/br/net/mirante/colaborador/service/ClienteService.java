@@ -86,9 +86,7 @@ public class ClienteService extends BaseService {
             throw new ParametroInvalidoException(MensagemUtil.MSG_REGISTRO_NAO_ENCONTRADO);
 
 
-        final var clienteDTO = getConverter().map(colaborador.get(), ClienteDTO.class);
-
-        return clienteDTO;
+        return getConverter().map(colaborador.get(), ClienteDTO.class);
     }
 
 

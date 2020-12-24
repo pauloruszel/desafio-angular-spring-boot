@@ -5,7 +5,7 @@ import {MensageriaService} from "../../../../../shared/shared-services/mensageri
 import {ClienteService} from "../../../../../shared/shared-services/cliente.service";
 import {ConsultaCepService} from "../../../../../shared/shared-services/consulta-cep.service";
 import {ClienteDto} from "../../../../../shared/shared-models/dto/cliente-dto";
-import {removerMascara} from "../../../../../shared/shared-utils/retirar-mascara-cpf-cnpj.util";
+import {removerMascara} from "../../../../../shared/shared-utils/retirar-mascara.util";
 import {EmailDto} from "../../../../../shared/shared-models/dto/email-dto";
 import {EnderecoDto} from "../../../../../shared/shared-models/dto/endereco-dto";
 import {TelefoneDto} from "../../../../../shared/shared-models/dto/telefone-dto";
@@ -159,7 +159,7 @@ export class CadastrarComponent implements OnInit {
     }
 
     voltar(): void {
-        this.router.navigate([`/`]);
+        this.router.navigate([`cliente/pesquisar`]);
     }
 
 }

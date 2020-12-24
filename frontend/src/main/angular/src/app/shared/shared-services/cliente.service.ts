@@ -8,23 +8,31 @@ const urlBase = 'http://localhost:8080';
 const path = 'clientes';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ClienteService {
 
-  constructor(protected  http: HttpClient) {
-  }
+    constructor(protected http: HttpClient) {
+    }
 
-  salvar(cliente: ClienteDto): Observable<ClienteDto> {
-    return this.http.post<ClienteDto>(`${urlBase}/${path}`, cliente);
-  }
+    salvar(cliente: ClienteDto): Observable<ClienteDto> {
+        return this.http.post<ClienteDto>(`${urlBase}/${path}`, cliente);
+    }
 
-  delete(id: number): Observable<MensagemRetorno> {
-    return this.http.delete<MensagemRetorno>(`${urlBase}/${path}/${id}`);
-  }
+    delete(id: number): Observable<MensagemRetorno> {
+        return this.http.delete<MensagemRetorno>(`${urlBase}/${path}/${id}`);
+    }
 
-  getClientesEditar(id: number): Observable<ClienteDto> {
-    return this.http.get<ClienteDto>(`${urlBase}/${path}/${id}`);
-  }
+    getClientes(): Observable<ClienteDto[]> {
+        return this.http.get<ClienteDto[]>(`${urlBase}/${path}`);
+    }
+
+    getClientesSearchTerm(nomeCliente: string): Observable<any> {
+        return this.http.get<any>(`${urlBase}/${path}/search/?searchTerm=${nomeCliente}`);
+    }
+
+    getClientesAll(): Observable<any> {
+        return this.http.get<any>(`${urlBase}/${path}/all`);
+    }
 
 }

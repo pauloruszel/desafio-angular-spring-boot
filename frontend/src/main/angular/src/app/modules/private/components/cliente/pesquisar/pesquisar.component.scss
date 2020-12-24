@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+mat-card[hidden] { display: none; }
+
+.container > * {
+    width: 100%;
+}
+
+.container-title {
+    font-weight: bold;
+    width: 100%;
+}
+
+div.container {
+    margin-top: 20px;
+}
+
+.card-space {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-header-cell {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.mat-cell {
+    text-align: center;
+    justify-content:center;
+}
+
+.mat-editar {
+    background-color: #32b1ff;
+    color: #fff;
+}
+
+.mat-visualizar {
+    background-color: #206291;
+    color: #fff;
+}
+
+.tableempty {
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+}

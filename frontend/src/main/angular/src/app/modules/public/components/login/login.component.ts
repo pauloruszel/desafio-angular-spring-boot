@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       this.mensageriaService.showMensagemSucesso('Logado como: ' + this.roles);
       this.reloadPage();
     }, (err) => {
-      this.mensageriaService.showMensagemErro(err.error.mensagem);
+      this.mensageriaService.showMensagemErro(err.mensagem);
     });
   }
 

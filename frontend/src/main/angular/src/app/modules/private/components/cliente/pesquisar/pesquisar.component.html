@@ -1,1 +1,103 @@
-<p>pesquisar works!</p>
+<div class="container"
+     fxLayout="column"
+     fxLayoutAlign="space-evenly center">
+    <mat-card class="card-space">
+        <div fxLayoutAlign="end center" fxLayoutGap="80%">
+            <mat-card-title>Pesquisar Cliente</mat-card-title>
+            <button mat-raised-button color="primary" (click)="cadastrar()">
+                <i class="material-icons icon-card">add</i>Novo
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-evenly center">
+            <div fxFlex="20">
+                <form [formGroup]="form" autocomplete="off" novalidate (keydown)="pesquisaPorEnter($event)">
+                    <mat-form-field class="container" appearance="outline">
+                        <mat-label>Nome</mat-label>
+                        <input matInput formControlName="nome" type="text" placeholder="Nome do Cliente" maxlength="20">
+                    </mat-form-field>
+                </form>
+            </div>
+            <div fxFlex="80">
+                <form [formGroup]="form" autocomplete="off" novalidate (keydown)="pesquisaPorEnter($event)">
+                    <mat-form-field class="container" appearance="outline">
+                        <mat-label>CPF</mat-label>
+                        <input matInput formControlName="cpf" type="text" placeholder="CPF do Cliente" maxlength="11">
+                    </mat-form-field>
+                </form>
+            </div>
+
+        </div>
+
+        <div fxLayout="row"
+             fxLayoutAlign="end center"
+             fxLayoutGap="10px">
+            <div fxLayoutAlign="space-evenly center">
+                <button mat-raised-button color="default" (click)="limparCampos()">
+                    <i class="material-icons icon-card">clear</i>Limpar
+                </button>
+            </div>
+            <div fxLayoutAlign="space-evenly center">
+                <button mat-raised-button color="primary" (click)="pesquisarClientes()" [disabled]="validarFormulario">
+                    <i class="material-icons icon-card">search</i>Pesquisar
+                </button>
+            </div>
+        </div>
+    </mat-card>
+    <mat-card [hidden]="flagTable">
+        <div class="tableempty">
+            Nenhum registro encontrado.
+        </div>
+    </mat-card>
+    <mat-card [hidden]="clienteDataSource.length === 0">
+        <mat-card-title>Lista de Clientes</mat-card-title>
+        <div class="mat-elevation-z5">
+            <table mat-table [dataSource]="clienteDataSource" matSort="false">
+
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef>Código</th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef>Nome</th>
+                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cpf">
+                    <th mat-header-cell *matHeaderCellDef>CPF</th>
+                    <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acoes">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let element" fxLayoutAlign="space-evenly center">
+                        <button matTooltip="Visualizar Cliente" mat-flat-button color="visualizar"
+                                (click)="visualizarCliente(element.id)">
+                            <i class="material-icons icon-card">remove_red_eye</i>
+                        </button>
+                        <button mat-flat-button color="editar" matTooltip="Editar Cliente"
+                                (click)="editarCliente(element.id)">
+                            <i class="material-icons icon-card">edit</i>
+                        </button>
+                        <button mat-flat-button color="warn" (click)="confirmarExclusao(element.id)">
+                            <i class="material-icons icon-card">delete</i>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="colunasCliente; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: colunasCliente;"></tr>
+            </table>
+
+            <mat-paginator
+                #paginator
+                [pageIndex]=0
+                [pageSizeOptions]="[10, 20, 30, 40, 50, 100]"
+                [length]="totalResultados"
+                (page)="configuraPaginaCliente($event)"
+                [hidden]="!flagTable">
+            </mat-paginator>
+        </div>
+
+    </mat-card>
+</div>

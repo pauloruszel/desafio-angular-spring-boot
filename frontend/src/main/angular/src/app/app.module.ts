@@ -38,6 +38,8 @@ import {CadastrarComponent} from './modules/private/components/cliente/cadastrar
 import {EditarComponent} from './modules/private/components/cliente/editar/editar.component';
 import {PesquisarComponent} from './modules/private/components/cliente/pesquisar/pesquisar.component';
 import {VisualizarComponent} from './modules/private/components/cliente/visualizar/visualizar.component';
+import {MatTableModule} from "@angular/material/table";
+import {SharedComponentsModule} from "./shared/shared-components/shared-components.module";
 
 @NgModule({
   declarations: [
@@ -52,36 +54,38 @@ import {VisualizarComponent} from './modules/private/components/cliente/visualiz
     CadastrarComponent,
     EditarComponent,
     PesquisarComponent,
-    VisualizarComponent
+    VisualizarComponent,
   ],
-  imports: [
-    AppRoutingModule,
-    CommonModule,
-    FormsModule,
-    FlexLayoutModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    RouterModule,
-    MatSnackBarModule,
-    SharedModelsModule,
-    MatTooltipModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        AppRoutingModule,
+        CommonModule,
+        FormsModule,
+        FlexLayoutModule,
+        ReactiveFormsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatCardModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        RouterModule,
+        MatSnackBarModule,
+        SharedModelsModule,
+        MatTooltipModule,
+        MatPaginatorModule,
+        MatTableModule,
+        SharedComponentsModule
+    ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
