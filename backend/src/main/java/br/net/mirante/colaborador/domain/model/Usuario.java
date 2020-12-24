@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "idUsuario", unique = true, nullable = false))
-@Table(	name = "usuarios",
+@Table(	name = "TB_Usuario",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "usuario"),
                 @UniqueConstraint(columnNames = "email")

@@ -24,12 +24,14 @@ public class TipoTelefoneService extends BaseService {
         this.tipoTelefoneRepository = tipoTelefoneRepository;
     }
 
+    @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public List<TipoTelefoneDTO> listarTodos() {
         return tipoTelefoneRepository.findAll()
                 .stream().map(tipoContato -> getConverter().map(tipoContato, TipoTelefoneDTO.class))
                 .collect(Collectors.toList());
     }
 
+    @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public TipoTelefoneDTO buscarPorId(Long id) throws ParametroInvalidoException {
         if (id == null)
             throw new ParametroInvalidoException(MensagemUtil.MSG_PARAMETRO_ID_INVALIDO);

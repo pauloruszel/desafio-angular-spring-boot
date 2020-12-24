@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,13 +42,6 @@ public class EmailService extends BaseService {
                 .collect(Collectors.toList());
     }
 
-    @NotNull
-    @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    List<EmailDTO> getEmailsPorIdCliente(Long id) {
-        return emailRepository.findAllEmailsByIdCliente(id)
-                .stream().map(email -> getConverter().map(email, EmailDTO.class))
-                .collect(Collectors.toList());
-    }
 
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public EmailDTO buscarPorId(Long id) throws ParametroInvalidoException {

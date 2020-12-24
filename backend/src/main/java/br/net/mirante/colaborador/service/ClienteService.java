@@ -1,10 +1,10 @@
 package br.net.mirante.colaborador.service;
 
 import br.net.mirante.colaborador.domain.dtos.ClienteDTO;
-import br.net.mirante.colaborador.domain.dtos.EmailDTO;
 import br.net.mirante.colaborador.domain.dtos.MensagemRetornoDTO;
-import br.net.mirante.colaborador.domain.dtos.TelefoneDTO;
 import br.net.mirante.colaborador.domain.model.Cliente;
+import br.net.mirante.colaborador.domain.model.Email;
+import br.net.mirante.colaborador.domain.model.Telefone;
 import br.net.mirante.colaborador.domain.util.MensagemUtil;
 import br.net.mirante.colaborador.exception.ParametroInvalidoException;
 import br.net.mirante.colaborador.repository.ClienteRepository;
@@ -18,10 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,10 +39,20 @@ public class ClienteService extends BaseService {
 
     @Transactional
     public ClienteDTO salvar(final ClienteDTO dto) throws ParametroInvalidoException {
+        Set<Email> emails = new HashSet<>();
+        Set<Telefone> telefones = new HashSet<>();
+
         if (Objects.isNull(dto))
             throw new ParametroInvalidoException(MensagemUtil.MSG_PARAMETRO_DTO_INVALIDO);
 
         final Cliente cliente = getConverter().map(dto, Cliente.class);
+
+        emails.add(getConverter().map(dto.getEmail(), Email.class));
+        telefones.add(getConverter().map(dto.getTelefone(), Telefone.class));
+
+        cliente.setEmails(emails);
+        cliente.setTelefones(telefones);
+
         clienteRepository.save(cliente);
         return getConverter().map(cliente, ClienteDTO.class);
     }
@@ -78,31 +85,12 @@ public class ClienteService extends BaseService {
         if (colaborador.isEmpty())
             throw new ParametroInvalidoException(MensagemUtil.MSG_REGISTRO_NAO_ENCONTRADO);
 
-        List<TelefoneDTO> telefones = getTelefonesPorIdCliente(id);
-        List<EmailDTO> emails = getEmailsPorIdCliente(id);
 
         final var clienteDTO = getConverter().map(colaborador.get(), ClienteDTO.class);
-        clienteDTO.setTelefones(telefones);
-        clienteDTO.setEmails(emails);
 
         return clienteDTO;
     }
 
-    @NotNull
-    @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    List<TelefoneDTO> getTelefonesPorIdCliente(Long id) {
-        return telefoneRepository.findAllTelefonesByIdCliente(id)
-                .stream().map(contato -> getConverter().map(contato, TelefoneDTO.class))
-                .collect(Collectors.toList());
-    }
-
-    @NotNull
-    @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    List<EmailDTO> getEmailsPorIdCliente(Long id) {
-        return emailRepository.findAllEmailsByIdCliente(id)
-                .stream().map(email -> getConverter().map(email, EmailDTO.class))
-                .collect(Collectors.toList());
-    }
 
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public List<ClienteDTO> listarTodos() {

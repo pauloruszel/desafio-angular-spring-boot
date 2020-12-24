@@ -1,8 +1,8 @@
 /**
- *  Regra de validação do CPF e CNPJ
- *  @param string cpf cnpj
+ *  Regra de validação do CPF e CNPJ e outras
+ * @param value
  */
-export function removerMascaraCpfCNPJ(value: any) {
+export function removerMascara(value: any) {
 
   if (!value) {
     return false;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "idRole", unique = true, nullable = false))
-@Table(name = "roles")
+@Table(name = "TB_Role")
 public class Role extends BaseEntity {
 
     @Enumerated(EnumType.STRING)

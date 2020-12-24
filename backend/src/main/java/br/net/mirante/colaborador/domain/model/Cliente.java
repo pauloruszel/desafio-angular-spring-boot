@@ -8,26 +8,43 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TB_Cliente")
 @AttributeOverride(name = "id", column = @Column(name = "idCliente", unique = true, nullable = false, length = 4, precision = 10))
+@Table(	name = "TB_Cliente",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "nome"),
+                @UniqueConstraint(columnNames = "cpf")
+        })
 public class Cliente extends BaseEntity {
 
     @Size(min = 3, max = 100)
-    @Column(name = "nmCliente", length = 100, nullable = false)
     private String nome;
 
     @CPF
-    @Column(name = "dsCpf", length = 11, nullable = false)
+    @Size(max = 11)
     private String cpf;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idEndereco", referencedColumnName = "idendereco")
     private Endereco endereco;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(	name = "cliente_telefones",
+            joinColumns = @JoinColumn(name = "id_cliente"),
+            inverseJoinColumns = @JoinColumn(name = "id_telefone"))
+    private Set<Telefone> telefones = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(	name = "cliente_emails",
+            joinColumns = @JoinColumn(name = "id_cliente"),
+            inverseJoinColumns = @JoinColumn(name = "id_email"))
+    private Set<Email> emails = new HashSet<>();
 
 }

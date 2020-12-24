@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,10 +21,11 @@ public class ClienteDTO implements BaseDTO {
     private String nome;
 
     @NotBlank
+    @Size(max = 11)
     private String cpf;
 
     private EnderecoDTO endereco;
-    private List<EmailDTO> emails;
-    private List<TelefoneDTO> telefones;
+    private EmailDTO email;
+    private TelefoneDTO telefone;
 
 }

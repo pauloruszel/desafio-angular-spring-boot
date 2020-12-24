@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,13 +34,6 @@ public class TelefoneService extends BaseService {
         return getConverter().map(telefone, TelefoneDTO.class);
     }
 
-    @NotNull
-    @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    List<TelefoneDTO> getTelefonesPorIdCliente(Long id) {
-        return telefoneRepository.findAllTelefonesByIdCliente(id)
-                .stream().map(contato -> getConverter().map(contato, TelefoneDTO.class))
-                .collect(Collectors.toList());
-    }
 
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
     public TelefoneDTO buscarPorId(Long id) throws ParametroInvalidoException {

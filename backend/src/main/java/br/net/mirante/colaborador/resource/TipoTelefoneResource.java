@@ -35,7 +35,7 @@ public class TipoTelefoneResource {
     @GetMapping("/{id:[1-9][0-9]*}")
     public ResponseEntity<TipoTelefoneDTO> buscarPorId(@PathVariable("id") final Long id) throws ParametroInvalidoException {
         final var retorno = tipoTelefoneService.buscarPorId(id);
-        if(Objects.nonNull(retorno)) {
+        if (Objects.nonNull(retorno)) {
             return status(OK).body(retorno);
         }
         return ResponseEntity.notFound().build();

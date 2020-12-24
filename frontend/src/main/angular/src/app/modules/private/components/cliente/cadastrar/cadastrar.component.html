@@ -77,6 +77,17 @@
         <div fxLayout="row" class="form-container"
              fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
 
+        <mat-form-field appearance="outline">
+            <mat-label>Tipo do Contato</mat-label>
+            <mat-select formControlName="tipoContato" required>
+                <mat-option *ngFor="let tipoContato of tiposDeContatos" [value]="tipoContato.id">
+                    {{ tipoContato.descricaoTipoTelefone }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Campo obrigatório.</mat-hint>
+            <mat-error *ngIf="hasErros('tipoContato', 'required')">Campo obrigatório.</mat-error>
+        </mat-form-field>
+
           <mat-form-field appearance="outline">
             <mat-label>Telefone</mat-label>
             <input matInput formControlName="telefone" placeholder="Telefone" type="text">
@@ -97,12 +108,12 @@
              fxLayoutAlign="end center" fxLayoutGap="30px">
           <div fxLayoutAlign="space-evenly center">
             <button mat-raised-button (click)="voltar()">
-              <i class="material-icons icon-card">keyboard_arrow_left</i>Voltar
+              <em class="material-icons icon-card">keyboard_arrow_left</em>Voltar
             </button>
           </div>
           <div fxLayoutAlign="space-evenly center">
             <button mat-raised-button color="primary" [disabled]="!form.valid">
-              <i class="material-icons icon-card">save</i>Salvar
+              <em class="material-icons icon-card">save</em>Salvar
             </button>
           </div>
         </div>
