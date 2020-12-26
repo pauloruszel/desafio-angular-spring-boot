@@ -9,6 +9,9 @@
                  fxLayoutAlign="flex start center" class="container-title-form">
                 <p class="title-form">Editar Cliente</p>
             </div>
+            <div>
+                <mat-divider></mat-divider>
+            </div>
             <div fxFlex="80" class="form-container"
                  fxLayout="column"
                  fxLayoutAlign="space-evenly center">
@@ -79,7 +82,7 @@
 
                     <mat-form-field appearance="outline">
                         <mat-label>Tipo do Contato</mat-label>
-                        <mat-select formControlName="tipoContato" required>
+                        <mat-select [value]="tipoContatoSelecionado" formControlName="tipoContato" required>
                             <mat-option *ngFor="let tipoContato of tiposDeContatos" [value]="tipoContato.id">
                                 {{ tipoContato.descricaoTipoTelefone }}
                             </mat-option>

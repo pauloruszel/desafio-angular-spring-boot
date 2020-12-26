@@ -11,8 +11,8 @@ import {EnderecoDto} from "../../../../../shared/shared-models/dto/endereco-dto"
 import {TelefoneDto} from "../../../../../shared/shared-models/dto/telefone-dto";
 import {TipoTelefoneDto} from "../../../../../shared/shared-models/dto/tipo-telefone-dto";
 import {TokenStorageService} from "../../../../core/services/token-storage.service";
-import {ERole} from "../../../../../shared/shared-models/enums/role.enum";
 import {TipoContatoService} from "../../../../../shared/shared-services/tipo-contato.service";
+import {ErrorDto} from "../../../../../shared/shared-models/dto/error-dto";
 
 @Component({
     selector: 'app-cadastrar',
@@ -22,7 +22,6 @@ import {TipoContatoService} from "../../../../../shared/shared-services/tipo-con
 export class CadastrarComponent implements OnInit {
 
     form: FormGroup;
-    roles: ERole[] = [];
     tiposDeContatos: TipoTelefoneDto[] = [];
 
     constructor(
@@ -38,12 +37,7 @@ export class CadastrarComponent implements OnInit {
 
     ngOnInit() {
         this.iniciarFormulario();
-
         this.tipoContatoService.getTiposContato().subscribe(rs => this.tiposDeContatos = rs)
-
-        if (this.tokenStorageService.getToken()) {
-            this.roles = this.tokenStorageService.getUser().roles;
-        }
     }
 
     iniciarFormulario() {
@@ -66,23 +60,27 @@ export class CadastrarComponent implements OnInit {
         const cep = this.form.get('cep').value;
         if (cep != null && cep !== '') {
             this.resetDadosCep();
-            this.consultaCepService.getConsultaCEP(cep).subscribe(dados => {
+            this.consultaCepService.getConsultaCEP(cep).subscribe((dados) => {
                 this.populaDadosCep(dados);
-            }, () => {
-                this.mensageriaService.showMensagemAlerta('O CEP não encontrado.');
             });
         }
     }
 
     populaDadosCep(dados) {
-        this.form.patchValue(
-            {
-                logradouro: dados.logradouro,
-                bairro: dados.bairro,
-                cidade: dados.localidade,
-                uf: dados.uf,
-                complemento: dados.complemento,
-            });
+        let retorno: ErrorDto;
+        retorno = dados;
+        if (!retorno.erro) {
+            this.form.patchValue(
+                {
+                    logradouro: dados.logradouro,
+                    bairro: dados.bairro,
+                    cidade: dados.localidade,
+                    uf: dados.uf,
+                    complemento: dados.complemento,
+                });
+        } else {
+            this.mensageriaService.showMensagemAlerta('O CEP não encontrado.');
+        }
     }
 
     resetDadosCep() {

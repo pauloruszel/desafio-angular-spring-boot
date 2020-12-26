@@ -1,25 +1,23 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-    <div>
-      <a mat-button [routerLink]="'/home'"> Home </a>
-      <a mat-button *ngIf="false" [routerLink]="'/admin'"> Admin Board </a>
-      <a mat-button *ngIf="false" [routerLink]="'/mod'"> Moderator Board </a>
-      <a mat-button *ngIf="false" [routerLink]="'/user'"> Usuário </a>
-      <a mat-button *ngIf="isLoggedIn" [routerLink]="'/profile'"> Perfil </a>
-      <a mat-button *ngIf="isLoggedIn" [routerLink]="'cliente/cadastrar'"> Cadastrar Cliente </a>
-    </div>
-    <span class="menu-spacer"></span>
-    <a mat-button *ngIf="!isLoggedIn" [routerLink]="'/register'"> Registrar </a>
-    <a mat-button *ngIf="!isLoggedIn" [routerLink]="'/login'"> Login </a>
-    <button mat-icon-button (click)="logout()" *ngIf="isLoggedIn" matTooltip="Sair">
-      <mat-icon>power_settings_new</mat-icon>
-    </button>
-  </mat-toolbar-row>
+    <mat-toolbar-row>
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <div><a>Sis Client</a></div>
+        <div>
+            <a mat-button [routerLink]="'cliente/pesquisar'"><mat-icon>home</mat-icon> Home </a>
+            <a mat-button [routerLink]="'/profile'"><mat-icon>account_circle</mat-icon> Perfil </a>
+        </div>
+        <span class="menu-spacer"></span>
+        <a *ngIf="isLoggedIn">Bem vindo(a)  {{ currentUser.username }}</a>
+        <a mat-button *ngIf="!isLoggedIn" [routerLink]="'/register'"><mat-icon>assignment_ind</mat-icon> Registrar </a>
+        <a mat-button *ngIf="!isLoggedIn" [routerLink]="'/login'"><mat-icon>login</mat-icon> Login </a>
+        <button mat-icon-button (click)="logout()" *ngIf="isLoggedIn" matTooltip="Sair">
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </mat-toolbar-row>
 </mat-toolbar>
 
 <div class="container">
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </div>

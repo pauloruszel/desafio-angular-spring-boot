@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class ClienteService extends BaseService {
@@ -69,7 +68,7 @@ public class ClienteService extends BaseService {
     }
 
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    public ClienteDTO buscarPorId(Long id) throws ParametroInvalidoException {
+    public Cliente buscarPorId(Long id) throws ParametroInvalidoException {
         if (id == null)
             throw new ParametroInvalidoException(MensagemUtil.MSG_PARAMETRO_ID_INVALIDO);
 
@@ -77,16 +76,12 @@ public class ClienteService extends BaseService {
         if (colaborador.isEmpty())
             throw new ParametroInvalidoException(MensagemUtil.MSG_REGISTRO_NAO_ENCONTRADO);
 
-
-        return getConverter().map(colaborador.get(), ClienteDTO.class);
+        return colaborador.get();
     }
 
-
     @Transactional(Transactional.TxType.NOT_SUPPORTED)
-    public List<ClienteDTO> listarTodos() {
-        return clienteRepository.findAll()
-                .stream().map(cliente -> getConverter().map(cliente, ClienteDTO.class))
-                .collect(Collectors.toList());
+    public List<Cliente> listarTodos() {
+        return clienteRepository.findAll();
     }
 
     @Transactional

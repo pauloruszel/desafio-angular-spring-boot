@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {MensagemRetorno} from '../shared-models/model/mensagem-retorno';
 import {ClienteDto} from '../shared-models/dto/cliente-dto';
 import {PageDto} from "../shared-models/dto/page-dto";
+import {ClienteListaDto} from "../shared-models/dto/cliente-lista-dto";
 
 const urlBase = 'http://localhost:8080';
 const path = 'clientes';
@@ -40,7 +41,7 @@ export class ClienteService {
         return this.http.get<PageDto>(`${urlBase}/${path}/all`);
     }
 
-    getClientesEditar(id: number): Observable<ClienteDto> {
-        return this.http.get<ClienteDto>(`${urlBase}/${path}/${id}`);
+    getClientesEditar(id: number): Observable<ClienteListaDto> {
+        return this.http.get<ClienteListaDto>(`${urlBase}/${path}/${id}`);
     }
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './modules/core/services/token-storage.service';
+import {UsuarioService} from "./shared/shared-services/usuario.service";
 
 @Component({
   selector: 'app-root',
@@ -9,25 +10,30 @@ import {TokenStorageService} from './modules/core/services/token-storage.service
 export class AppComponent implements OnInit {
   title = 'app';
 
-  private roles: string[];
+  roles: string[];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
+  showUserBoard = false;
   username: string;
+  currentUser: any;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,
+              private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
+        this.currentUser = this.tokenStorageService.getUser()
+        const user = this.tokenStorageService.getUser();
+        this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+        this.showAdminBoard = this.usuarioService.isAdmin();
+        this.showModeratorBoard = this.usuarioService.isModerator();
+        this.showUserBoard = this.usuarioService.isUser();
 
-      this.username = user.username;
+      this.username = this.usuarioService.getUserName();
     }
   }
 

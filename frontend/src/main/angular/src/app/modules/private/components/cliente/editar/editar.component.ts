@@ -11,6 +11,7 @@ import {removerMascara} from "../../../../../shared/shared-utils/retirar-mascara
 import {EnderecoDto} from "../../../../../shared/shared-models/dto/endereco-dto";
 import {EmailDto} from "../../../../../shared/shared-models/dto/email-dto";
 import {TelefoneDto} from "../../../../../shared/shared-models/dto/telefone-dto";
+import {ClienteListaDto} from "../../../../../shared/shared-models/dto/cliente-lista-dto";
 
 @Component({
     selector: 'app-editar',
@@ -21,7 +22,8 @@ export class EditarComponent implements OnInit {
 
     form: FormGroup;
     tiposDeContatos: TipoTelefoneDto[] = [];
-    cliente: ClienteDto = null;
+    tipoContatoSelecionado: number;
+    cliente: ClienteListaDto = null;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -42,16 +44,16 @@ export class EditarComponent implements OnInit {
 
     getClientesEdicao() {
         this.route.params.subscribe((params: Params) => {
-            this.clienteService.getClientesEditar(params.id).subscribe((res: ClienteDto) => {
+            this.clienteService.getClientesEditar(params.id).subscribe((res: ClienteListaDto) => {
                 this.montarClienteDTO(res);
             }, error => {
-                this.mensageriaService.showMensagemErro(error.mensagem);
+                this.mensageriaService.showMensagemErro(error.error.message);
             });
         });
 
     }
 
-    recuperarDadosFormulario(response: ClienteDto) {
+    recuperarDadosFormulario(response: ClienteListaDto) {
         this.form.patchValue(
             {
                 nome: response.nome,
@@ -62,16 +64,17 @@ export class EditarComponent implements OnInit {
                 cidade: response.endereco.cidade,
                 uf: response.endereco.uf,
                 complemento: response.endereco.complemento,
-                tipoContato: null, // response.telefone.tipoTelefone.id,
-                telefone: null, // response.telefone.numeroTelefone,
-                email: null //response.email.descricaoEmail,
+                tipoContato: response.telefones[0].tipoTelefone.id,
+                telefone: response.telefones[0].numeroTelefone,
+                email: response.emails[0].descricaoEmail,
             });
     }
 
 
-    montarClienteDTO(response: any) {
+    montarClienteDTO(response: ClienteListaDto) {
         if (response) {
             this.cliente = response;
+            this.tipoContatoSelecionado = this.cliente.telefones[0].tipoTelefone.id
             this.recuperarDadosFormulario(this.cliente);
         } else {
             this.mensageriaService.showMensagemErro("Cliente não encontrado(a)");
@@ -81,7 +84,7 @@ export class EditarComponent implements OnInit {
     iniciarFormulario() {
         this.form = this.formBuilder.group({
             nome: [{value: '', disabled: true}, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-            cpf: [{value: '', disabled: true}, [Validators.required]],
+            cpf: [null, [Validators.required]],
             cep: [null, [Validators.required]],
             logradouro: [null, [Validators.required]],
             bairro: [null, [Validators.required]],
@@ -129,7 +132,7 @@ export class EditarComponent implements OnInit {
 
     montarDadosClienteEdicao(): ClienteDto {
         return {
-            id: null,
+            id: this.cliente.id,
             nome: this.form.get('nome').value,
             cpf: removerMascara(this.form.get('cpf').value),
             endereco: this.montarEndereco(),
@@ -140,6 +143,7 @@ export class EditarComponent implements OnInit {
 
     montarEndereco(): EnderecoDto {
         return {
+            id: this.cliente.endereco.id,
             cep: removerMascara(this.form.get('cep').value),
             logradouro: this.form.get('logradouro').value,
             bairro: this.form.get('bairro').value,
@@ -170,12 +174,14 @@ export class EditarComponent implements OnInit {
 
     montarEmail(): EmailDto {
         return {
+            id: this.cliente.emails[0].id,
             descricaoEmail: this.form.get('email').value,
         };
     }
 
     montarTelefone(): TelefoneDto {
         return {
+            id: this.cliente.telefones[0].id,
             numeroTelefone: this.form.get('telefone').value,
             tipoTelefone: this.montarTipoTelefone(),
         };
@@ -184,7 +190,7 @@ export class EditarComponent implements OnInit {
     montarTipoTelefone(): TipoTelefoneDto {
         return {
             id: this.form.get('tipoContato').value,
-            descricaoTipoTelefone: null,
+            descricaoTipoTelefone: "",
         };
     }
 

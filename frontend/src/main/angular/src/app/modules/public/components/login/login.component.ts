@@ -6,6 +6,7 @@ import {CredencialDto} from '../../../../shared/shared-models/dto/credencial-dto
 import {TokenStorageService} from '../../../core/services/token-storage.service';
 import {ERole} from '../../../../shared/shared-models/enums/role.enum';
 import {Router} from '@angular/router';
+import {PreviousRouteService} from "../../../../shared/shared-services/previous-route-service";
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,15 @@ export class LoginComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private mensageriaService: MensageriaService,
-              private tokenStorageService: TokenStorageService) {
+              private tokenStorageService: TokenStorageService,
+              private previousRouteService: PreviousRouteService) {
   }
 
   ngOnInit() {
     this.iniciarFormulario();
+      if (this.previousRouteService.getPreviousUrl()) {
+          location.reload()
+      }
   }
 
   iniciarFormulario() {
@@ -53,10 +58,12 @@ export class LoginComponent implements OnInit {
       this.tokenStorageService.saveToken(data.token);
       this.tokenStorageService.saveUsuario(data);
       this.roles = data.roles;
-      this.mensageriaService.showMensagemSucesso('Logado como: ' + this.roles);
+      this.mensageriaService.showMensagemSucesso('Logado com sucesso!');
       this.router.navigate([`cliente/pesquisar`]);
     }, (err) => {
-      this.mensageriaService.showMensagemErro(err.mensagem);
+        if (err.status === 401) {
+            this.mensageriaService.showMensagemErro('Usuário ou senha inválida!');
+        }
     });
   }
 

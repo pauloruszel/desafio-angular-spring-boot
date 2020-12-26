@@ -78,14 +78,14 @@
                     <mat-header-cell *matHeaderCellDef></mat-header-cell>
                     <mat-cell *matCellDef="let element" fxLayoutAlign="space-evenly center">
                         <button matTooltip="Visualizar Cliente" mat-flat-button color="visualizar"
-                                (click)="visualizarCliente(element.id)">
+                                (click)="visualizarCliente(element.id)" *ngIf="isAdmin() || isUser()">
                             <em class="material-icons icon-card">remove_red_eye</em>
                         </button>
                         <button mat-flat-button color="editar" matTooltip="Editar Cliente"
-                                (click)="editarCliente(element.id)">
+                                (click)="editarCliente(element.id)" *ngIf="isAdmin()">
                             <em class="material-icons icon-card">edit</em>
                         </button>
-                        <button mat-flat-button color="warn" (click)="confirmarExclusao(element.id)">
+                        <button mat-flat-button color="warn" (click)="confirmarExclusao(element.id)" *ngIf="isAdmin()">
                             <em class="material-icons icon-card">delete</em>
                         </button>
                     </mat-cell>

@@ -9,6 +9,8 @@ import {ClienteDto} from "../../../../../shared/shared-models/dto/cliente-dto";
 import {validarNome} from "../../../../../shared/shared-utils/string-utils";
 import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
 import {PageDto} from "../../../../../shared/shared-models/dto/page-dto";
+import {UsuarioService} from "../../../../../shared/shared-services/usuario.service";
+import {PreviousRouteService} from "../../../../../shared/shared-services/previous-route-service";
 
 const SO_NUMEROS = /^\d{1,4}$/;
 
@@ -38,16 +40,17 @@ export class PesquisarComponent implements OnInit {
         private clienteService: ClienteService,
         private mensageriaService: MensageriaService,
         public dialog: MatDialog,
-        private router: Router) {
+        private router: Router,
+        private usuarioService: UsuarioService,
+        private previousRouteService: PreviousRouteService) {
     }
 
     ngOnInit() {
         this.iniciarFormulario();
         this.getClientesPage();
-    }
-
-    reloadPage(): void {
-        window.location.reload();
+        if (this.previousRouteService.getPreviousUrl()) {
+            location.reload()
+        }
     }
 
     iniciarFormulario() {
@@ -141,6 +144,7 @@ export class PesquisarComponent implements OnInit {
         this.getClientesPage();
     }
 
+
     async deleteCliente(id: number) {
         return this.clienteService.delete(id).subscribe(res => {
             this.mensageriaService.showMensagemSucesso(res.mensagem);
@@ -164,6 +168,14 @@ export class PesquisarComponent implements OnInit {
                 this.deleteCliente(id);
             }
         });
+    }
+
+    isAdmin() {
+        return this.usuarioService.isAdmin();
+    }
+
+    isUser() {
+        return this.usuarioService.isUser();
     }
 
     editarCliente(id: number) {

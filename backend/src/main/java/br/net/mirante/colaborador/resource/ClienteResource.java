@@ -32,13 +32,13 @@ public class ClienteResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> listarTodos() {
+    public ResponseEntity<List<Cliente>> listarTodos() {
         return ok(clienteService.listarTodos());
     }
 
 
     @GetMapping("/{id:[1-9][0-9]*}")
-    public ResponseEntity<ClienteDTO> buscarPorId(@PathVariable("id") final Long id) throws ParametroInvalidoException {
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable("id") final Long id) throws ParametroInvalidoException {
         final var retorno = clienteService.buscarPorId(id);
         if (Objects.nonNull(retorno)) {
             return status(OK).body(retorno);

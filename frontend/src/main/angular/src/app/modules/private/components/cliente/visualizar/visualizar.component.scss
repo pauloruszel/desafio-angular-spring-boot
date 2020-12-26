@@ -1,0 +1,23 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.form-container > * {
+    width: 100%;
+}
+.container-title-form {
+    font-weight: bold;
+    width: 100%;
+}
+
+.title-form {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 25px;
+}
+
+div.form-container {
+    margin-top: 20px;
+}
