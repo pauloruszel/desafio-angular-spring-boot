@@ -12,6 +12,8 @@ import {EnderecoDto} from "../../../../../shared/shared-models/dto/endereco-dto"
 import {EmailDto} from "../../../../../shared/shared-models/dto/email-dto";
 import {TelefoneDto} from "../../../../../shared/shared-models/dto/telefone-dto";
 import {ClienteListaDto} from "../../../../../shared/shared-models/dto/cliente-lista-dto";
+import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-editar',
@@ -29,6 +31,7 @@ export class EditarComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private route: ActivatedRoute,
+        public dialog: MatDialog,
         private clienteService: ClienteService,
         private consultaCepService: ConsultaCepService,
         private mensageriaService: MensageriaService,
@@ -153,12 +156,27 @@ export class EditarComponent implements OnInit {
         };
     }
 
-    async create(cliente: any) {
+    async create(cliente: ClienteListaDto) {
+        const mensagem = 'Confirma o cadastro ?';
+
+        const dialogRef = this.dialog.open(DialogConfirmacaoComponent, {
+            maxWidth: '400px',
+            data: {titulo: 'Confirmar Cadastro', mensagem: mensagem}
+        });
+
+        dialogRef.afterClosed().subscribe(dialogResult => {
+            if (dialogResult) {
+                this.salvar(cliente);
+            }
+        });
+    }
+
+    private async salvar(cliente: any) {
         cliente = this.montarDadosClienteEdicao();
 
         if (this.form.valid) {
             this.clienteService.salvar(cliente).subscribe(() => {
-                this.mensageriaService.showMensagemSucesso('Salvo com Sucesso.')
+                this.mensageriaService.showMensagemSucesso('Dados salvos com Sucesso!')
             }, error => {
                 this.mensageriaService.showMensagemInformativa(error.message);
             }, () => {

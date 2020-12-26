@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TipoTelefoneDto} from "../../../../../shared/shared-models/dto/tipo-telefone-dto";
-import {ClienteDto} from "../../../../../shared/shared-models/dto/cliente-dto";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {ClienteService} from "../../../../../shared/shared-services/cliente.service";
 import {ConsultaCepService} from "../../../../../shared/shared-services/consulta-cep.service";
@@ -40,7 +39,7 @@ export class VisualizarComponent implements OnInit {
 
     getClientesVisualizacao() {
         this.route.params.subscribe((params: Params) => {
-            this.clienteService.getClientesEditar(params.id).subscribe((res: ClienteDto) => {
+            this.clienteService.getClientesEditar(params.id).subscribe((res: ClienteListaDto) => {
                 this.montarClienteDTO(res);
             }, (error) => {
                 console.log(error);

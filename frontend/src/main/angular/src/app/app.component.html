@@ -6,7 +6,7 @@
         <div><a>Sis Client</a></div>
         <div>
             <a mat-button [routerLink]="'cliente/pesquisar'"><mat-icon>home</mat-icon> Home </a>
-            <a mat-button [routerLink]="'/profile'"><mat-icon>account_circle</mat-icon> Perfil </a>
+            <a mat-button *ngIf="showAdminBoard" [routerLink]="'/profile'"><mat-icon>account_circle</mat-icon> Perfil </a>
         </div>
         <span class="menu-spacer"></span>
         <a *ngIf="isLoggedIn">Bem vindo(a)  {{ currentUser.username }}</a>

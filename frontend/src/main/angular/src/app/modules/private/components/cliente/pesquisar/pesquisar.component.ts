@@ -11,6 +11,7 @@ import {DialogConfirmacaoComponent} from "../../../../../shared/shared-component
 import {PageDto} from "../../../../../shared/shared-models/dto/page-dto";
 import {UsuarioService} from "../../../../../shared/shared-services/usuario.service";
 import {PreviousRouteService} from "../../../../../shared/shared-services/previous-route-service";
+import {MatTableDataSource} from "@angular/material/table";
 
 const SO_NUMEROS = /^\d{1,4}$/;
 
@@ -23,6 +24,7 @@ export class PesquisarComponent implements OnInit {
 
     public colunasCliente = ['codigo', 'nome', 'cpf', 'acoes'];
     public clienteDataSource: ClienteDto[] = [];
+    datasource: MatTableDataSource<ClienteDto[]>;
     private paginacao: PageDto;
 
     @Output() SubmitEvent = new EventEmitter<object>();
@@ -65,6 +67,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            this.datasource = new MatTableDataSource(res.content);
         })
     }
 
@@ -74,6 +77,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            this.datasource = new MatTableDataSource(res.content);
             if (this.totalResultados) {
                 this.flagTable = true;
             } else {
@@ -99,6 +103,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            this.datasource = new MatTableDataSource(res.content);
             if (this.totalResultados) {
                 this.flagTable = true;
             } else {
@@ -107,21 +112,17 @@ export class PesquisarComponent implements OnInit {
         })
     }
 
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.datasource.filter = filterValue.trim().toLowerCase();
+    }
+
     get validarFormulario() {
-        return this.isCodigoValido() && this.isNomeValido();
-    }
-
-    private isExisteNumeros(): boolean {
-        const cpf = this.form.get('cpf').value;
-        return SO_NUMEROS.test(cpf);
-    }
-
-    private isCodigoValido() {
-        return this.form.get('cpf').value === null || this.form.get('cpf').value.length === 0 || !this.isExisteNumeros();
+        return this.isNomeValido();
     }
 
     private isNomeValido() {
-        return this.form.get('nome').value === null || this.form.get('nome').value.length > 100 || !this.form.get('nome').value.trim();
+        return this.form.get('nome').value === null || !this.form.get('nome').value.trim();
     }
 
     async getClientes() {
@@ -156,7 +157,7 @@ export class PesquisarComponent implements OnInit {
     }
 
     confirmarExclusao(id: number): void {
-        const mensagem = 'Tem certeza que deseja excluir o registro?';
+        const mensagem = 'Deseja excluir o registro?';
 
         const dialogRef = this.dialog.open(DialogConfirmacaoComponent, {
             maxWidth: '400px',

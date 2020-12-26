@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 2%;
 }
 
 mat-card[hidden] { display: none; }
@@ -15,8 +15,8 @@ mat-card[hidden] { display: none; }
     width: 100%;
 }
 
-div.container {
-    margin-top: 20px;
+div > mat-card.mat-card.mat-focus-indicator.card-space {
+    padding: 10px;
 }
 
 .card-space {
