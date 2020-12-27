@@ -24,6 +24,7 @@
     "@angular/router": "^10.0.4",
     "@types/jest": "^26.0.19",
     "core-js": "^3.1.4",
+    "ngx-mask": "^11.1.4",
     "rxjs": "^6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

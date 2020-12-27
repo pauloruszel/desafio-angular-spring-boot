@@ -13,6 +13,10 @@ import {TipoTelefoneDto} from "../../../../../shared/shared-models/dto/tipo-tele
 import {TokenStorageService} from "../../../../core/services/token-storage.service";
 import {TipoContatoService} from "../../../../../shared/shared-services/tipo-contato.service";
 import {ErrorDto} from "../../../../../shared/shared-models/dto/error-dto";
+import {EmailValidators} from "../../../../../shared/shared-validators/email-validators";
+import {CepValidators} from "../../../../../shared/shared-validators/cep-validators";
+import {CpfValidators} from "../../../../../shared/shared-validators/cpf-validators";
+import {TelefoneCelularValidators} from "../../../../../shared/shared-validators/telefone-celular-validators";
 
 @Component({
     selector: 'app-cadastrar',
@@ -35,6 +39,11 @@ export class CadastrarComponent implements OnInit {
 
     }
 
+    public isEmailValid = EmailValidators.isEmailValid();
+    public isCepValid = CepValidators.isValidCep();
+    public isCpfValid = CpfValidators.isValidCpf();
+    public isTelefoneValid = TelefoneCelularValidators.isValidCellPhone();
+
     ngOnInit() {
         this.iniciarFormulario();
         this.tipoContatoService.getTiposContato().subscribe(rs => this.tiposDeContatos = rs)
@@ -53,7 +62,12 @@ export class CadastrarComponent implements OnInit {
             tipoContato: [null, [Validators.required]],
             telefone: [null, Validators.compose([Validators.required])],
             email: [null, [Validators.required, Validators.minLength(10)]],
-        })
+        });
+        this.form.setValidators(Validators.compose([
+            this.isEmailValid,
+            this.isCepValid,
+            this.isCpfValid,
+            this.isTelefoneValid]));
     }
 
     getConsultaCEP() {
@@ -79,7 +93,7 @@ export class CadastrarComponent implements OnInit {
                     complemento: dados.complemento,
                 });
         } else {
-            this.mensageriaService.showMensagemAlerta('O CEP não encontrado.');
+            this.mensageriaService.showMensagemAlerta('O CEP não foi encontrado.');
         }
     }
 

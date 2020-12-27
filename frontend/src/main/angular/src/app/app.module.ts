@@ -40,6 +40,9 @@ import {PesquisarComponent} from './modules/private/components/cliente/pesquisar
 import {VisualizarComponent} from './modules/private/components/cliente/visualizar/visualizar.component';
 import {MatTableModule} from "@angular/material/table";
 import {SharedComponentsModule} from "./shared/shared-components/shared-components.module";
+import {IConfig, NgxMaskModule} from "ngx-mask";
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -84,7 +87,8 @@ import {SharedComponentsModule} from "./shared/shared-components/shared-componen
         MatTooltipModule,
         MatPaginatorModule,
         MatTableModule,
-        SharedComponentsModule
+        SharedComponentsModule,
+        NgxMaskModule.forRoot(),
     ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

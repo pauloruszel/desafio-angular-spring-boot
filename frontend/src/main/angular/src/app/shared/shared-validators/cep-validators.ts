@@ -1,17 +1,25 @@
-import {AbstractControl} from '@angular/forms';
+import {FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import {CONST_REGEX_UTIL} from "../shared-utils/const-regex-util";
 
 
 export class CepValidators {
 
-  /**
-   * função que valida o cep
-   * @param control - o control do campo
-   */
-  static isValidCep(isInvalid: boolean = false, control: AbstractControl) {
-    if (control.value && (control.value.replace(/\D/gi, '').length < 8 || isInvalid)) {
-      return { 'msg.cep.invalido': true };
+    /**
+     * Função que valida o cep
+     */
+    static isValidCep(): ValidatorFn {
+        return (group: FormGroup): ValidationErrors => {
+            const cepRetorno = group.controls.cep;
+            let cepString = String(group.controls.cep.value);
+                cepString = cepString.replace(/\D/g, '');
+            if (cepRetorno && cepString !== '') {
+                if (!CONST_REGEX_UTIL.REGEX_CEP.test(cepString)) {
+                    cepRetorno.setErrors({notEquivalent: true});
+                } else {
+                    cepRetorno.setErrors(null);
+                }
+            }
+            return;
+        };
     }
-    return null;
-  }
-
 }

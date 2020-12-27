@@ -14,6 +14,7 @@ import {TelefoneDto} from "../../../../../shared/shared-models/dto/telefone-dto"
 import {ClienteListaDto} from "../../../../../shared/shared-models/dto/cliente-lista-dto";
 import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ErrorDto} from "../../../../../shared/shared-models/dto/error-dto";
 
 @Component({
     selector: 'app-editar',
@@ -113,6 +114,9 @@ export class EditarComponent implements OnInit {
     }
 
     populaDadosCep(dados) {
+        let retorno: ErrorDto;
+        retorno = dados;
+        if (!retorno.erro) {
         this.form.patchValue(
             {
                 logradouro: dados.logradouro,
@@ -121,6 +125,9 @@ export class EditarComponent implements OnInit {
                 uf: dados.uf,
                 complemento: dados.complemento,
             });
+        } else {
+            this.mensageriaService.showMensagemAlerta('O CEP não foi encontrado.');
+        }
     }
 
     resetDadosCep() {

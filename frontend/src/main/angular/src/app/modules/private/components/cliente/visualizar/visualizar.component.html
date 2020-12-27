@@ -25,7 +25,7 @@
 
                     <mat-form-field appearance="fill">
                         <mat-label for="cpf">CPF</mat-label>
-                        <input matInput formControlName="cpf" placeholder="999.999.999-99">
+                        <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="999.999.999-99">
                         <mat-hint>Campo obrigatório</mat-hint>
                     </mat-form-field>
                 </div>
@@ -35,7 +35,7 @@
 
                     <mat-form-field appearance="fill">
                         <mat-label for="cep">CEP</mat-label>
-                        <input matInput formControlName="cep" placeholder="CEP">
+                        <input matInput formControlName="cep" mask="00.000-000" placeholder="CEP">
                         <mat-hint>Campo obrigatório</mat-hint>
                     </mat-form-field>
 
@@ -88,14 +88,14 @@
 
                     <mat-form-field appearance="fill">
                         <mat-label>Telefone</mat-label>
-                        <input matInput formControlName="telefone" placeholder="Telefone" type="text">
+                        <input matInput formControlName="telefone" mask="(00) 0000-0000||(00) 00000-0000" placeholder="Telefone" type="text">
                         <mat-hint>Campo obrigatório</mat-hint>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
                         <mat-label for="email">E-mail</mat-label>
                         <input type="email" formControlName="email" matInput placeholder="E-mail">
-                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-hint>Campo obrigatório</mat-hint>c
                     </mat-form-field>
                 </div>
 

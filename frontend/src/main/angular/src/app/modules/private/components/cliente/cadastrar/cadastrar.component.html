@@ -24,9 +24,10 @@
 
           <mat-form-field appearance="outline">
             <mat-label for="cpf">CPF</mat-label>
-            <input matInput formControlName="cpf" placeholder="999.999.999-99">
+            <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="999.999.999-99">
             <mat-hint>Campo obrigatório</mat-hint>
             <mat-error *ngIf="hasErros('cpf', 'required')">Campo obrigatório.</mat-error>
+            <mat-error *ngIf="this.isCpfValid">Formato de campo CPF inválido.</mat-error>
           </mat-form-field>
         </div>
 
@@ -35,9 +36,10 @@
 
           <mat-form-field appearance="outline">
             <mat-label for="cep">CEP</mat-label>
-            <input matInput formControlName="cep" placeholder="CEP" (blur)="getConsultaCEP()">
+            <input matInput formControlName="cep" mask="00.000-000" placeholder="CEP" (blur)="getConsultaCEP()">
             <mat-hint>Campo obrigatório</mat-hint>
             <mat-error *ngIf="hasErros('cep', 'required')">Campo obrigatório.</mat-error>
+            <mat-error *ngIf="this.isCepValid">Formato de campo CEP inválido.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -90,9 +92,11 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Telefone</mat-label>
-            <input matInput formControlName="telefone" placeholder="Telefone" type="text">
+            <input matInput formControlName="telefone" mask="(00) 0000-0000||(00) 00000-0000"
+                   placeholder="(99) 9999-9999 ou (99) 99999-9999" type="text">
             <mat-hint>Campo obrigatório</mat-hint>
             <mat-error *ngIf="hasErros('telefone', 'required')">Campo obrigatório.</mat-error>
+            <mat-error *ngIf="this.isTelefoneValid">Formato de campo de Telefone inválido.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -100,6 +104,7 @@
             <input type="email" formControlName="email" matInput placeholder="E-mail">
             <mat-hint>Campo obrigatório</mat-hint>
             <mat-error *ngIf="hasErros('email', 'required')">Campo obrigatório.</mat-error>
+            <mat-error *ngIf="this.isEmailValid">Formato de campo de e-mail inválido.</mat-error>
           </mat-form-field>
         </div>
 

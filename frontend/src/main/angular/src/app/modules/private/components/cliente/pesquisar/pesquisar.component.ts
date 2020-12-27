@@ -6,7 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {ClienteService} from "../../../../../shared/shared-services/cliente.service";
 import {ClienteDto} from "../../../../../shared/shared-models/dto/cliente-dto";
-import {validarNome} from "../../../../../shared/shared-utils/string-utils";
+import {replaceStringToCPF, validarNome} from "../../../../../shared/shared-utils/string-utils";
 import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
 import {PageDto} from "../../../../../shared/shared-models/dto/page-dto";
 import {UsuarioService} from "../../../../../shared/shared-services/usuario.service";
@@ -14,6 +14,7 @@ import {PreviousRouteService} from "../../../../../shared/shared-services/previo
 import {MatTableDataSource} from "@angular/material/table";
 
 const SO_NUMEROS = /^\d{1,4}$/;
+const CPF_VALIDO = /(\d{3})(\d{3})(\d{3})(\d{2})/;
 
 @Component({
     selector: 'app-pesquisar',
@@ -67,6 +68,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            replaceStringToCPF(res);
             this.datasource = new MatTableDataSource(res.content);
         })
     }
@@ -77,6 +79,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            replaceStringToCPF(res);
             this.datasource = new MatTableDataSource(res.content);
             if (this.totalResultados) {
                 this.flagTable = true;
@@ -103,6 +106,7 @@ export class PesquisarComponent implements OnInit {
             this.paginacao = res;
             this.totalResultados = res.content.length;
             this.clienteDataSource = res.content;
+            replaceStringToCPF(res);
             this.datasource = new MatTableDataSource(res.content);
             if (this.totalResultados) {
                 this.flagTable = true;
