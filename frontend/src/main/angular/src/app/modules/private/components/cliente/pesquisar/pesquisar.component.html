@@ -57,7 +57,7 @@
                 <mat-card-title>Lista de Clientes</mat-card-title>
             </div>
             <div fxLayoutAlign="end" fxFlex="50">
-                <button mat-raised-button color="primary" (click)="cadastrar()">
+                <button mat-raised-button color="primary" *ngIf="isAdmin()" (click)="cadastrar()">
                     <em class="material-icons icon-card">add</em>Novo
                 </button>
             </div>

@@ -13,7 +13,7 @@ public class TestResource {
 
     @GetMapping("/all")
     public String acessoLivre() {
-        return "Public Content.";
+        return "Seja Bem Vindo(a)!";
     }
 
     @GetMapping("/user")
