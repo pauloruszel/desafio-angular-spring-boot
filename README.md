@@ -64,3 +64,8 @@ Acompanhar logs:
 ```shell script
 $ docker-compose logs -f
 ```
+
+### Passo 7
+Caso haja problemas com a criação das tabelas pela imagem Docker (postgresql):
+
+Há um arquivo chamado <code>init.sql</code> na raiz do projeto, com um script de DDL e INSERT para auxiliar na suvida do projeto.
