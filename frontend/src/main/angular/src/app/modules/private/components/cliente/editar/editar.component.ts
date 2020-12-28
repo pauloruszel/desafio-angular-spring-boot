@@ -15,6 +15,10 @@ import {ClienteListaDto} from "../../../../../shared/shared-models/dto/cliente-l
 import {DialogConfirmacaoComponent} from "../../../../../shared/shared-components/dialog-confirmacao/dialog-confirmacao.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ErrorDto} from "../../../../../shared/shared-models/dto/error-dto";
+import {EmailValidators} from "../../../../../shared/shared-validators/email-validators";
+import {CepValidators} from "../../../../../shared/shared-validators/cep-validators";
+import {CpfValidators} from "../../../../../shared/shared-validators/cpf-validators";
+import {TelefoneCelularValidators} from "../../../../../shared/shared-validators/telefone-celular-validators";
 
 @Component({
     selector: 'app-editar',
@@ -39,6 +43,11 @@ export class EditarComponent implements OnInit {
         private tipoContatoService: TipoContatoService) {
 
     }
+
+    public isEmailValid = EmailValidators.isEmailValid();
+    public isCepValid = CepValidators.isValidCep();
+    public isCpfValid = CpfValidators.isValidCpf();
+    public isTelefoneValid = TelefoneCelularValidators.isValidCellPhone();
 
     ngOnInit() {
         this.iniciarFormulario();
@@ -99,6 +108,11 @@ export class EditarComponent implements OnInit {
             telefone: [null, Validators.compose([Validators.required])],
             email: [null, [Validators.required, Validators.minLength(10)]],
         })
+        this.form.setValidators(Validators.compose([
+            this.isEmailValid,
+            this.isCepValid,
+            this.isCpfValid,
+            this.isTelefoneValid]));
     }
 
     getConsultaCEP() {
