@@ -135,3 +135,6 @@ INSERT INTO public.tb_cliente (cpf, nome, id_endereco) VALUES (83803955149, 'Cal
 INSERT INTO public.tb_email (ds_email) VALUES ('calebetomastheovieira@mectron.com.br');
 INSERT INTO public.cliente_emails (id_cliente, id_email) VALUES(1, 1);
 INSERT INTO public.cliente_telefones (id_cliente, id_telefone) VALUES(1, 1);
+
+-- ALTER USER PARA ADMIN
+UPDATE USER_ROLES SET ROLE_ID = 3 WHERE USER_ID = 2
