@@ -1,5 +1,38 @@
 CREATE DATABASE projetoclientedb;
 
+-- DROP TABLE public.tb_role;
+
+CREATE TABLE public.tb_role
+(
+    id_role bigserial   NOT NULL,
+    nome    varchar(20) NULL,
+    CONSTRAINT tb_role_pkey PRIMARY KEY (id_role)
+);
+
+-- DROP TABLE public.tb_usuario;
+
+CREATE TABLE public.tb_usuario
+(
+    id_usuario bigserial    NOT NULL,
+    email      varchar(50)  NULL,
+    senha      varchar(120) NULL,
+    usuario    varchar(20)  NULL,
+    CONSTRAINT tb_usuario_pkey PRIMARY KEY (id_usuario),
+    CONSTRAINT tb_usuario_usuario UNIQUE (usuario),
+    CONSTRAINT tb_usuario_email UNIQUE (email)
+);
+
+-- DROP TABLE public.user_roles;
+
+CREATE TABLE public.user_roles
+(
+    user_id int8 NOT NULL,
+    role_id int8 NOT NULL,
+    CONSTRAINT user_roles_pkey PRIMARY KEY (user_id, role_id),
+    CONSTRAINT user_roles_usuario FOREIGN KEY (user_id) REFERENCES tb_usuario(id_usuario),
+    CONSTRAINT user_roles_role FOREIGN KEY (role_id) REFERENCES tb_role (id_role)
+);
+
 -- DROP TABLE public.tb_email;
 
 CREATE TABLE public.tb_email
@@ -25,16 +58,6 @@ CREATE TABLE public.tb_endereco
 );
 
 
--- DROP TABLE public.tb_role;
-
-CREATE TABLE public.tb_role
-(
-    id_role bigserial   NOT NULL,
-    nome    varchar(20) NULL,
-    CONSTRAINT tb_role_pkey PRIMARY KEY (id_role)
-);
-
-
 -- DROP TABLE public.tb_tipo_telefone;
 
 CREATE TABLE public.tb_tipo_telefone
@@ -42,20 +65,6 @@ CREATE TABLE public.tb_tipo_telefone
     id_tipo_telefone bigserial   NOT NULL,
     ds_tipo_telefone varchar(60) NULL,
     CONSTRAINT tb_tipo_telefone_pkey PRIMARY KEY (id_tipo_telefone)
-);
-
-
--- DROP TABLE public.tb_usuario;
-
-CREATE TABLE public.tb_usuario
-(
-    id_usuario bigserial    NOT NULL,
-    email      varchar(50)  NULL,
-    senha      varchar(120) NULL,
-    usuario    varchar(20)  NULL,
-    CONSTRAINT tb_usuario_pkey PRIMARY KEY (id_usuario),
-    CONSTRAINT tb_usuario_usuario UNIQUE (usuario),
-    CONSTRAINT tb_usuario_email UNIQUE (email)
 );
 
 
@@ -83,18 +92,6 @@ CREATE TABLE public.tb_telefone
     id_tipo_telefone int8        NULL,
     CONSTRAINT tb_telefone_pkey PRIMARY KEY (id_telefone),
     CONSTRAINT tb_telefone_tipo_telefone FOREIGN KEY (id_tipo_telefone) REFERENCES tb_tipo_telefone (id_tipo_telefone)
-);
-
-
--- DROP TABLE public.user_roles;
-
-CREATE TABLE public.user_roles
-(
-    user_id int8 NOT NULL,
-    role_id int8 NOT NULL,
-    CONSTRAINT user_roles_pkey PRIMARY KEY (user_id, role_id),
-    CONSTRAINT user_roles_usuario FOREIGN KEY (user_id) REFERENCES tb_usuario(id_usuario),
-    CONSTRAINT user_roles_role FOREIGN KEY (role_id) REFERENCES tb_role (id_role)
 );
 
 
