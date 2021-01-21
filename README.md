@@ -1,6 +1,15 @@
 # Bem-vindo ao Sis Client - API
+O Projeto consiste em um CRUD para salvar Clientes, porém fazendo autenticação com Spring Security e JWT - autenticação baseada em token.
+Onde um usuário poderá se autenticar no sistema com duas contas diferentes:
 
-Autenticação Spring Boot (PostgreSQL) com Spring Security e JWT - autenticação baseada em token
+1- Usuário admin
+  Senha 123456
+Esse usuário possui permissão total no sistema.
+
+2- Usuário comum
+  Senha 123456
+  Esse usuário só tem permissão de visualização dos dados.
+
 
 - [X] Backend - API Rest
 - [ ] Frontend
