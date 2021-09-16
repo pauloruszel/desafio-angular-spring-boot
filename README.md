@@ -1,4 +1,4 @@
-# Bem-vindo ao Sis Client - API
+# :woman_office_worker: Bem-vindo ao Sis Client - API :office_worker:
 O Projeto consiste em um CRUD para salvar Clientes, porém fazendo autenticação com Spring Security e JWT - autenticação baseada em token.
 
 Onde um usuário poderá se autenticar no sistema com duas contas diferentes:
